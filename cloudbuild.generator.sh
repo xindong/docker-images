@@ -10,6 +10,7 @@ for dir in $images; do
     image=${BASH_REMATCH[1]}
     ver=${BASH_REMATCH[2]}
   else
+    image=$dir
     ver=latest
   fi
   echo -n "
