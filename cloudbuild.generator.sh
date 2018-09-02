@@ -14,5 +14,7 @@ for dir in $images; do
   fi
   echo -n "
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/\$PROJECT_ID/$image:$ver', 'library/$dir' ]" >> ../cloudbuild.yaml
+  args: [ 'build', '-t', 'gcr.io/\$PROJECT_ID/$image:$ver', 'library/$dir' ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'push', 'gcr.io/\$PROJECT_ID/$image:$ver']" >> ../cloudbuild.yaml
 done
