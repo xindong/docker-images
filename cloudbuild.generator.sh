@@ -16,6 +16,7 @@ for dir in $images; do
   echo -n "
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/\$PROJECT_ID/$image:$ver', 'library/$dir' ]
+  timeout: 1800s
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'push', 'gcr.io/\$PROJECT_ID/$image:$ver']" >> ../cloudbuild.yaml
 done
