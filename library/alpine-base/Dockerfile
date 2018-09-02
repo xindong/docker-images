@@ -8,8 +8,8 @@ ENV PATH /usr/local/bin:$PATH
 ENV LANG C.UTF-8
 ENV GPG_KEY 0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D
 
-RUN apk update && apk upgrade && \
-    apk add --no-cache \
+RUN apk update -f && apk upgrade -f && \
+    apk add --no-cache -f \
         bash ca-certificates jq tini wget
 
 # Here we install GNU libc (aka glibc) and set C.UTF-8 locale as default.
