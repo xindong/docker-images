@@ -20,8 +20,8 @@ build_library() {
         image=${BASH_REMATCH[1]}
         ver=${BASH_REMATCH[2]}
     fi
-    echo "docker build --quiet --tag $ORGANIZATION/$image:$ver $1" >&2
-    docker build --quiet --tag $ORGANIZATION/$image:$ver $1
+    echo "docker build --tag $ORGANIZATION/$image:$ver $1" >&2
+    docker build --tag $ORGANIZATION/$image:$ver $1
     echo "docker push $ORGANIZATION/$image:$ver" >&2
     docker push $ORGANIZATION/$image:$ver
 }
