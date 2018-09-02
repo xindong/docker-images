@@ -1,36 +1,36 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/alpine-base:latest', 'library/alpine-base' ]
-  timeout: 1800s
+  timeout: 600s
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'push', 'gcr.io/$PROJECT_ID/alpine-base:latest']
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/anaconda3:5.2.0', 'library/anaconda3-5.2.0' ]
-  timeout: 1800s
+  timeout: 600s
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'push', 'gcr.io/$PROJECT_ID/anaconda3:5.2.0']
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/python:2.7', 'library/python-2.7' ]
-  timeout: 1800s
+  timeout: 600s
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'push', 'gcr.io/$PROJECT_ID/python:2.7']
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/python:3.5', 'library/python-3.5' ]
-  timeout: 1800s
+  timeout: 600s
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'push', 'gcr.io/$PROJECT_ID/python:3.5']
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/python:3.6', 'library/python-3.6' ]
-  timeout: 1800s
+  timeout: 600s
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'push', 'gcr.io/$PROJECT_ID/python:3.6']
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/python:3.7', 'library/python-3.7' ]
-  timeout: 1800s
+  timeout: 600s
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'push', 'gcr.io/$PROJECT_ID/python:3.7']
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/ruby:2.5', 'library/ruby-2.5' ]
-  timeout: 1800s
+  timeout: 600s
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'push', 'gcr.io/$PROJECT_ID/ruby:2.5']
