@@ -2,7 +2,7 @@
 
 cd `dirname $0`/library
 
-echo -n 'steps:' > ../cloudbuild.yml
+echo -n 'steps:' > ../cloudbuild.yaml
 
 images=`\ls`
 for dir in $images; do
@@ -14,5 +14,5 @@ for dir in $images; do
   fi
   echo -n "
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/\$PROJECT_ID/$image:$ver', '$dir' ]" >> ../cloudbuild.yml
+  args: [ 'build', '-t', 'gcr.io/\$PROJECT_ID/$image:$ver', '$dir' ]" >> ../cloudbuild.yaml
 done
