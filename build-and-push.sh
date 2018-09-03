@@ -14,16 +14,17 @@ Or, use --all to build and push them all" >&1
 }
 
 build_library() {
-    image=$1
-    ver=latest
-    if [[ $1 =~ ^([a-z][a-z0-9\-]+)-([0-9][\.0-9]+[0-9]+)$ ]]; then
-        image=${BASH_REMATCH[1]}
-        ver=${BASH_REMATCH[2]}
+    dir="$1"
+    img=$dir
+    tag='latest'
+    if [[ $dir =~ ^([a-z][a-z0-9\-]+):([a-z0-9]+)$ ]]; then
+        img=${BASH_REMATCH[1]}
+        tag=${BASH_REMATCH[2]}
     fi
-    echo "docker build --tag $ORGANIZATION/$image:$ver $1" >&2
-    docker build --tag $ORGANIZATION/$image:$ver $1
-    echo "docker push $ORGANIZATION/$image:$ver" >&2
-    docker push $ORGANIZATION/$image:$ver
+    #echo "docker build --tag '${ORGANIZATION}/${img}:${tag}' '${dir}'" >&2
+    docker build --tag '${ORGANIZATION}/${img}:${tag}' '${dir}'
+    #echo "docker push '${ORGANIZATION}/${img}:${tag}'" >&2
+    docker push '${ORGANIZATION}/${img}:${tag}'
 }
 
 target_library=

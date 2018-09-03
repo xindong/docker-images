@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM xindong/alpine-base:latest
 
 ENV PATH /usr/local/google-cloud-sdk/bin:$PATH
 
