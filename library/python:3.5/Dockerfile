@@ -14,6 +14,8 @@ RUN apk add --no-cache ca-certificates
 ENV GPG_KEY 97FC712E4C024BBEA48A61ED3A5CA953F73C700D
 ENV PYTHON_VERSION 3.5.6
 
+LABEL image.tag="3.5"
+
 RUN set -ex \
 	&& apk add --no-cache --virtual .fetch-deps \
 		gnupg \

@@ -5,5 +5,7 @@ RUN set -ex && \
     /bin/sh ~/anaconda.sh -b -p /usr/local/anaconda3 && \
     rm ~/anaconda.sh
 
+LABEL image.tag="5.2.0"
+
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]

@@ -21,11 +21,19 @@ build_library() {
         img=${BASH_REMATCH[1]}
         tag=${BASH_REMATCH[2]}
     fi
-    #echo "docker build --tag '${ORGANIZATION}/${img}:${tag}' '${dir}'" >&2
-    docker build --tag '${ORGANIZATION}/${img}:${tag}' '${dir}'
-    #echo "docker push '${ORGANIZATION}/${img}:${tag}'" >&2
-    docker push '${ORGANIZATION}/${img}:${tag}'
+    if [ -x $dir/docker-builder.sh ]; then
+        iid=`bash "$dir/docker-builder.sh"` && \
+        _tag=`docker image inspect $iid | jq -r '.[]["Config"]["Labels"]["image.tag"]'` && \
+        [ "x$_tag" != "x" ] && \
+        tag=$_tag
+    fi
+    #echo "docker build --tag \"${ORGANIZATION}/${img}:${tag}\" \"${dir}\"" >&2 && \
+    docker build --tag "${ORGANIZATION}/${img}:${tag}" "${dir}" && \
+    #echo "docker push \"${ORGANIZATION}/${img}:${tag}\"" >&2 && \
+    docker push "'${ORGANIZATION}/${img}:${tag}'"
 }
+
+[ `command -v jq` != "" ] || die "please install \`jq\`"
 
 target_library=
 build_all=0
