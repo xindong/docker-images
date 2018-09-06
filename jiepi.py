@@ -32,13 +32,13 @@ parser_push = sub2parsers.add_parser('push', help='push docker')
 parser_push.add_argument('name', nargs=1, metavar='<image name>')
 
 
-def build(dir, orgns=[]):
+def build(dest, orgns=None):
     pwd = os.path.dirname(os.path.realpath(__file__))
     os.chdir(pwd)
-    path = Path('.') / 'library' / dir
+    path = Path('.') / 'library' / dest
     if not path.is_dir():
-        raise RuntimeError("${dir} not exists")
-    docker = {'basename': os.path.basename(dir),
+        raise RuntimeError("{0} not exists".format([dest]))
+    docker = {'basename': os.path.basename(dest),
               'tag': 'latest',
               'args': {}}
     matches = re.search('^(.+)@(.+)$', docker['basename'])
@@ -54,6 +54,8 @@ def build(dir, orgns=[]):
         docker['args'] = baal.build_args()
         docker['tag'] = baal.image_tag()
     cmd = ['docker', 'build']
+    if orgns is None:
+        orgns = []
     for orgn in orgns:
         cmd.extend(['-t',
                     orgn + '/' + docker['basename'] + ':' + docker['tag']])
@@ -64,12 +66,12 @@ def build(dir, orgns=[]):
     cmd.extend(['--label', "image.tag={0}".format(docker['tag'])])
     # iidfile = path / 'image.iid'
     # os.remove(iidfile)
-    # cmd.extend(['--iidfile', iidfile, dir])
+    # cmd.extend(['--iidfile', iidfile, dest])
     cmd.append(str(path))
     cmd = ' '.join(cmd)
     if args['verbose']:
         print("Running docker build command: [{0}]".format(str(cmd)))
-    subprocess.run(cmd, check=True, capture_output=True, shell=True)
+    subprocess.run(cmd, check=True, shell=True)
     # with open(iidfile, 'r') as fd:
     #    return fd.read().strip()
 
@@ -80,7 +82,7 @@ def push(name):
 
 if __name__ == "__main__":
     args = vars(parser.parse_args(sys.argv[1:]))
-    if (args['verbose']):
+    if args['verbose']:
         print("ArgumentParser: " + str(args))
     if args['command'] == 'build':
         build(args['dest'], args['orgnizations'])
