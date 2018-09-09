@@ -45,5 +45,5 @@ RUN ALPINE_GLIBC_BASE_URL="https://github.com/${ALPINE_GLIBC_GITREPO}/releases/d
     apk del glibc-i18n && \
     apk del .build-dependencies
 
-ENTRYPOINT [ "/usr/bin/tini", "--" ]
+ENTRYPOINT [ "/sbin/tini", "--" ]
 CMD [ "/bin/bash" ]

@@ -11,5 +11,3 @@ RUN apk update -f && apk upgrade -f && \
         | jq -r '. | join(" ")'` && \
     gcloud -q components install $components && \
     gcloud version
-
-VOLUME ["/root/.config"]
