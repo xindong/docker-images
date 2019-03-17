@@ -1,6 +1,6 @@
-FROM xindong/anaconda3:5.3.0
+FROM xindong/anaconda3:2018.12
 
-LABEL image.tag="5.3.0"
+LABEL image.tag="2018.12"
 
 RUN set -ex && \
     pip install -U pip pip-review PyHamcrest && \
