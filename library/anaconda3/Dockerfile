@@ -9,5 +9,5 @@ RUN set -ex && \
     /bin/sh ~/anaconda.sh -b -p /anaconda3 && \
     rm ~/anaconda.sh
 
-ENTRYPOINT ['/anaconda3/bin/python']
-CMD ['-V']
+ENTRYPOINT ["/anaconda3/bin/python"]
+CMD ["-V"]
