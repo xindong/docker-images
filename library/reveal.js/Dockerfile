@@ -1,21 +1,23 @@
-FROM alpine:latest
+FROM node:26.3.0-alpine3.23
 
-ARG REVEALJS_GITREPO='hakimel/reveal.js'
-ARG REVEALJS_VERSION='3.7.0'
+ARG REVEALJS_GITREPO=hakimel/reveal.js
+ARG REVEALJS_VERSION=6.0.1
 
-LABEL google-cloud-sdk.version=$REVEALJS_VERSION
+LABEL revealjs.version=$REVEALJS_VERSION
 LABEL image.tag=$REVEALJS_VERSION
 
-RUN apk update -f && apk upgrade -f && \
-    apk add --no-cache -f npm && \
-    npm install -g npm@latest && \
-    wget https://github.com/${REVEALJS_GITREPO}/archive/${REVEALJS_VERSION}.tar.gz && \
-    tar xzf ${REVEALJS_VERSION}.tar.gz && \
-    rm ${REVEALJS_VERSION}.tar.gz && \
-    mv reveal.js-${REVEALJS_VERSION} reveal.js && \
-    cd reveal.js && npm install
+RUN set -ex \
+    && apk add --no-cache ca-certificates curl tar \
+    && curl -fsSL -o /tmp/revealjs.tar.gz \
+        "https://github.com/${REVEALJS_GITREPO}/archive/${REVEALJS_VERSION}.tar.gz" \
+    && tar xzf /tmp/revealjs.tar.gz -C /tmp \
+    && mv "/tmp/reveal.js-${REVEALJS_VERSION}" /reveal.js \
+    && rm /tmp/revealjs.tar.gz \
+    && cd /reveal.js \
+    && npm install \
+    && npm cache clean --force
 
-VOLUME ['/reveal.js/index.html', '/reveal.js/assets']
+VOLUME ["/reveal.js/index.html", "/reveal.js/assets"]
 
 WORKDIR /reveal.js
 

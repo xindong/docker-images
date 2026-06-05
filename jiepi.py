@@ -25,8 +25,9 @@ sub2parsers = parser.add_subparsers(
 
 parser_build = sub2parsers.add_parser('build', help='build docker')
 parser_build.add_argument('dest', nargs='?', metavar='<Dockerfile directory>')
-parser_build.add_argument('-o', '--orgnizations', action='append',
-                          help='orgnizations list')
+parser_build.add_argument('-o', '--organizations', '--orgnizations',
+                          dest='organizations', action='append',
+                          help='organizations list')
 
 parser_push = sub2parsers.add_parser('push', help='push docker')
 parser_push.add_argument('name', nargs=1, metavar='<image name>')
@@ -38,10 +39,14 @@ def build(dest, orgns=None):
     path = Path('.') / 'library' / dest
     if not path.is_dir():
         raise RuntimeError("{0} not exists".format([dest]))
+    parts = Path(dest).parts
     docker = {'basename': os.path.basename(dest),
               'tag': 'latest',
               'args': {}}
-    matches = re.search('^(.+)@(.+)$', docker['basename'])
+    if len(parts) > 1:
+        docker['basename'] = parts[-2]
+        docker['tag'] = parts[-1]
+    matches = re.search('^(.+)@(.+)$', parts[-1])
     if matches:
         docker['basename'] = matches.group(1)
         docker['tag'] = matches.group(2)
@@ -68,10 +73,9 @@ def build(dest, orgns=None):
     # os.remove(iidfile)
     # cmd.extend(['--iidfile', iidfile, dest])
     cmd.append(str(path))
-    cmd = ' '.join(cmd)
     if args['verbose']:
         print("Running docker build command: [{0}]".format(str(cmd)))
-    subprocess.run(cmd, check=True, shell=True)
+    subprocess.run(cmd, check=True)
     # with open(iidfile, 'r') as fd:
     #    return fd.read().strip()
 
@@ -85,6 +89,6 @@ if __name__ == "__main__":
     if args['verbose']:
         print("ArgumentParser: " + str(args))
     if args['command'] == 'build':
-        build(args['dest'], args['orgnizations'])
+        build(args['dest'], args['organizations'])
     elif args['command'] == 'push':
         push(args['name'])

@@ -1,41 +1,91 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/alpine-base:latest', 'library/alpine-base:latest' ]
-    timeout: 600s
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/alpine-base:latest', 'library/alpine-base']
+  timeout: 600s
 - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'push', 'gcr.io/$PROJECT_ID/alpine-base:latest']
+  args: ['push', 'gcr.io/$PROJECT_ID/alpine-base:latest']
 - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/anaconda3:5.2.0:latest', 'library/anaconda3:5.2.0' ]
-    timeout: 600s
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/anaconda3:latest', 'library/anaconda3']
+  timeout: 600s
 - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'push', 'gcr.io/$PROJECT_ID/anaconda3:5.2.0:latest']
+  args: ['push', 'gcr.io/$PROJECT_ID/anaconda3:latest']
 - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/google-cloud-sdk:latest', 'library/google-cloud-sdk:latest' ]
-    timeout: 600s
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/anaconda3-combo:latest', 'library/anaconda3-combo']
+  timeout: 600s
 - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'push', 'gcr.io/$PROJECT_ID/google-cloud-sdk:latest']
+  args: ['push', 'gcr.io/$PROJECT_ID/anaconda3-combo:latest']
 - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/python:2.7:latest', 'library/python:2.7' ]
-    timeout: 600s
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/anaconda3-cuda:latest', 'library/anaconda3-cuda']
+  timeout: 600s
 - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'push', 'gcr.io/$PROJECT_ID/python:2.7:latest']
+  args: ['push', 'gcr.io/$PROJECT_ID/anaconda3-cuda:latest']
 - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/python:3.5:latest', 'library/python:3.5' ]
-    timeout: 600s
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/git-bfg:latest', 'library/git-bfg']
+  timeout: 600s
 - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'push', 'gcr.io/$PROJECT_ID/python:3.5:latest']
+  args: ['push', 'gcr.io/$PROJECT_ID/git-bfg:latest']
 - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/python:3.6:latest', 'library/python:3.6' ]
-    timeout: 600s
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/google-cloud-sdk:latest', 'library/google-cloud-sdk']
+  timeout: 600s
 - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'push', 'gcr.io/$PROJECT_ID/python:3.6:latest']
+  args: ['push', 'gcr.io/$PROJECT_ID/google-cloud-sdk:latest']
 - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/python:3.7:latest', 'library/python:3.7' ]
-    timeout: 600s
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/google-cloud-sdk-combo:latest', 'library/google-cloud-sdk-combo']
+  timeout: 600s
 - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'push', 'gcr.io/$PROJECT_ID/python:3.7:latest']
+  args: ['push', 'gcr.io/$PROJECT_ID/google-cloud-sdk-combo:latest']
 - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/ruby:2.5:latest', 'library/ruby:2.5' ]
-    timeout: 600s
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/machine-learning:cpu', 'library/machine-learning/cpu']
+  timeout: 600s
 - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'push', 'gcr.io/$PROJECT_ID/ruby:2.5:latest']
+  args: ['push', 'gcr.io/$PROJECT_ID/machine-learning:cpu']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/machine-learning:gpu', 'library/machine-learning/gpu']
+  timeout: 600s
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/machine-learning:gpu']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/python:2.7', 'library/python@2.7']
+  timeout: 600s
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/python:2.7']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/python:3.5', 'library/python@3.5']
+  timeout: 600s
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/python:3.5']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/python:3.6', 'library/python@3.6']
+  timeout: 600s
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/python:3.6']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/python:3.7', 'library/python@3.7']
+  timeout: 600s
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/python:3.7']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/python:3.14', 'library/python@3.14']
+  timeout: 600s
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/python:3.14']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/rclone-task:latest', 'library/rclone-task']
+  timeout: 600s
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/rclone-task:latest']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/reveal.js:latest', 'library/reveal.js']
+  timeout: 600s
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/reveal.js:latest']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/ruby:2.5', 'library/ruby@2.5']
+  timeout: 600s
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/ruby:2.5']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--build-arg', 'BASE_REGISTRY=gcr.io/$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/ruby:4.0', 'library/ruby@4.0']
+  timeout: 600s
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/ruby:4.0']

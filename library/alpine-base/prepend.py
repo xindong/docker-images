@@ -8,7 +8,7 @@ def image_tag():
 
 def build_args():
     args = {'ALPINE_GLIBC_GITREPO': 'sgerrand/alpine-pkg-glibc',
-            'ALPINE_GLIBC_VERSION': None}
+            'ALPINE_GLIBC_VERSION': '2.35-r1'}
     url = "https://api.github.com/repos/{0}/releases/latest".format(
         args['ALPINE_GLIBC_GITREPO'])
     with request.urlopen(url) as f:

@@ -1,13 +1,13 @@
-FROM xindong/google-cloud-sdk:latest
+ARG IMAGE_PLATFORM=linux/amd64
+ARG BASE_REGISTRY=xindong
+FROM --platform=$IMAGE_PLATFORM ${BASE_REGISTRY}/google-cloud-sdk:latest
 
-LABEL image.tag='latest'
+LABEL image.tag="latest"
 
-RUN apk update -f && apk upgrade -f && \
-    apk --no-cache add -f jq && \
-    rm -rf /var/cache/apk/* && \
-    # install all components
-    components=`gcloud components list --format=json 2>/dev/null \
-        | jq '[.[] | { id: .id , installed: .state.name } | select(.installed == "Not Installed") | .id ]' \
-        | jq -r '. | join(" ")'` && \
-    gcloud -q components install $components && \
-    gcloud version
+RUN set -ex \
+    && apk add --no-cache jq \
+    && components="$(gcloud components list --format=json 2>/dev/null \
+        | jq '[.[] | {id: .id, installed: .state.name} | select(.installed == "Not Installed") | .id]' \
+        | jq -r 'join(" ")')" \
+    && if [ -n "$components" ]; then gcloud -q components install $components; fi \
+    && gcloud version
