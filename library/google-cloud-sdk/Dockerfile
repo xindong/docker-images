@@ -2,7 +2,7 @@ ARG IMAGE_PLATFORM=linux/amd64
 ARG BASE_REGISTRY=xindong
 FROM --platform=$IMAGE_PLATFORM ${BASE_REGISTRY}/alpine-base:latest
 
-ARG CLOUD_SDK_VERSION=570.0.0
+ARG CLOUD_SDK_VERSION=585.0.0
 
 ENV PATH=/usr/local/google-cloud-sdk/bin:$PATH
 
