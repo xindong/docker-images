@@ -31,7 +31,7 @@ RUN set -ex \
         "h5py==${H5PY_VERSION}" \
         "pydot==${PYDOT_VERSION}" \
         "ipyvolume==${IPYVOLUME_VERSION}" \
-    && conda install -y -c conda-forge "sagemath=${SAGEMATH_VERSION}" \
+    && conda install -y -c conda-forge "sage=${SAGEMATH_VERSION}" \
     && conda clean -afy \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
